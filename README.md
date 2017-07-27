@@ -7,30 +7,22 @@ java and vertx based example service for addressbook
  * git clone https://github.com/satjoshi77/addressbook.git
  * cd addressbook
  * mvn package
- * Note: It will run 29 juints
+   * Note: It will run 29 juints
 * Start addressbook service:
- * java -jar target/addressbook-app-0.0.1-SNAPSHOT-fat.jar
- * Note: addressbook  REST service will run at 8090 port
+   * java -jar target/addressbook-app-0.0.1-SNAPSHOT-fat.jar
+   * Note: addressbook  REST service will run at 8090 port
 * Send Request:
-* Using the postman collection "addressbook.postman_collection.json" aavailable in root folder of this git repo.  Import the collection to postman and run. It has 11 integration test.
+  * Using the postman collection "addressbook.postman_collection.json" aavailable in root folder of this git repo.  Import the collection to postman and run. It has 11 integration test.
 
 * Resource urls:
-retrieve contact(s)- 
-GET /accounts/{accountId}/contacts/{contactId}
-
-add a new contact-
-POST /accounts/{accountId}/contacts
-
-update an existing contact-
-PUT /accounts/{accountId}/contacts/{contactId}
-
-delete a contact-
-DELETE /accounts/{accountId}/contacts/{contactId}
-
-other search and filter interface:
-GET /accounts/{accountId}/contacts?state=CA,VA
-GET /accounts/{accountId}/contacts?startDate=07/03/2017&endDate=07/05/2017 [Not implemented]
-GET /accounts/{accountId}/contacts?areaCode=510
+ * retrieve contact(s)- GET /accounts/{accountId}/contacts/{contactId}
+ * add a new contact- POST /accounts/{accountId}/contacts
+ * update an existing contact- PUT /accounts/{accountId}/contacts/{contactId}
+ * delete a contact- DELETE /accounts/{accountId}/contacts/{contactId}
+ * other search and filter interface:
+   * GET /accounts/{accountId}/contacts?state=CA,VA
+   * GET /accounts/{accountId}/contacts?startDate=07/03/2017&endDate=07/05/2017 [Not implemented]
+   * GET /accounts/{accountId}/contacts?areaCode=510
 
 ```
 ********************************************
