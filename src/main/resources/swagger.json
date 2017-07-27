@@ -1,0 +1,118 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Address Book API",
+        "description": "Address Book API",
+        "version": "1.0.0"
+    },
+    "host": "localhost:8090",
+    "schemes": [
+        "http"
+    ],
+    "basePath": "/v1",
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/accounts/{accountId}/contacts/{contactId}": {
+            "get": {
+                "summary": "AddressBook",
+                "description": "Retrieve contacts.\n",
+                "parameters": [
+                    {
+                        "name": "state",
+                        "in": "query",
+                        "description": "State.",
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "AddressBook"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Address Book",
+                        "schema": {
+                            "$ref": "#/definitions/AddressBook"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "AddressBook": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "Unique identifier representing a contact."
+                },
+                "firstName": {
+                    "type": "string",
+                    "description": "first name for contact."
+                },
+                "lastName": {
+                    "type": "string",
+                    "description": "last name for contact."
+                },
+			   "phoneNumber": {
+                    "type": "string",
+                    "description": "phone number."
+                },
+                "email": {
+                    "type": "string",
+                    "description": "email."
+                },
+                "address": {
+                    "type": "object",
+                    "description": "address.",
+                     "schema": {
+                            "$ref": "#/definitions/Address"
+                        }
+                }           
+            }
+        },
+        "Error": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "fields": {
+                    "type": "string"
+                }
+            }
+        },
+           "Address": {
+            "type": "object",
+            "properties": {
+                "street": {
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "state": {
+                    "type": "string"
+                },
+                "country": {
+                    "type": "string"
+                },
+                "zip": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

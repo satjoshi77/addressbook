@@ -1,0 +1,417 @@
+{
+	"variables": [],
+	"info": {
+		"name": "addressbook",
+		"_postman_id": "3881aa57-400e-138d-192e-dd04ece20ff7",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "health check",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Body matches string\"] = responseBody.has(\"passing\");"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:8090/accounts/status",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"11\",\n    \"firstName\": \"sat\",\n    \"lastName\": \"jos\",\n    \"email\": \"abc@gmail.com\",\n\t\"address\":{\n\t\t\"street\":\"123 main street\",\n\t\t\"city\":\"fremont\",\n\t\t\"state\":\"CA\",\n\t\t\"country\":\"US\",\n\t\t\"zip\":\"94555\"\n\t},\n\t\"phoneNumber\":{\n\t\t\"areaCode\":\"510\",\n\t\t\"localNumber\":\"1231234\"\n\t}\n\n  }"
+				},
+				"description": "health check"
+			},
+			"response": []
+		},
+		{
+			"name": "post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 201;",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"id check\"] = jsonData.id === \"222\";"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:8090/accounts/111/contacts",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"222\",\n    \"firstName\": \"sat\",\n    \"lastName\": \"jos\",\n    \"email\": \"abc@gmail.com\",\n\t\"address\":{\n\t\t\"street\":\"123 main street\",\n\t\t\"city\":\"fremont\",\n\t\t\"state\":\"CA\",\n\t\t\"country\":\"US\",\n\t\t\"zip\":\"94555\"\n\t},\n\t\"phoneNumber\":\"510-123-1234\"\n\n  }"
+				},
+				"description": "create"
+			},
+			"response": []
+		},
+		{
+			"name": "post again",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 400\"] = responseCode.code === 400;",
+							"",
+							"tests[\"Body matches string\"] = responseBody.has(\"Contact already exists\");"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:8090/accounts/111/contacts",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"222\",\n    \"firstName\": \"sat\",\n    \"lastName\": \"jos\",\n    \"email\": \"abc@gmail.com\",\n\t\"address\":{\n\t\t\"street\":\"123 main street\",\n\t\t\"city\":\"fremont\",\n\t\t\"state\":\"CA\",\n\t\t\"country\":\"US\",\n\t\t\"zip\":\"94555\"\n\t},\n\t\"phoneNumber\":\"510-123-1234\"\n\n  }"
+				},
+				"description": "create"
+			},
+			"response": []
+		},
+		{
+			"name": "get by contactId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"id check\"] = jsonData.id === \"222\";"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:8090/accounts/111/contacts/222",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"11\",\n    \"firstName\": \"sat\",\n    \"lastName\": \"jos\",\n    \"email\": \"abc@gmail.com\",\n\t\"address\":{\n\t\t\"street\":\"123 main street\",\n\t\t\"city\":\"fremont\",\n\t\t\"state\":\"CA\",\n\t\t\"country\":\"US\",\n\t\t\"zip\":\"94555\"\n\t},\n\t\"phoneNumber\":{\n\t\t\"areaCode\":\"510\",\n\t\t\"localNumber\":\"1231234\"\n\t}\n\n  }"
+				},
+				"description": "retrieve"
+			},
+			"response": []
+		},
+		{
+			"name": "get by area code",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": {
+					"raw": "http://localhost:8090/accounts/111/contacts?areaCode=510",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"accounts",
+						"111",
+						"contacts"
+					],
+					"query": [
+						{
+							"key": "areaCode",
+							"value": "510",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"11\",\n    \"firstName\": \"sat\",\n    \"lastName\": \"jos\",\n    \"email\": \"abc@gmail.com\",\n\t\"address\":{\n\t\t\"street\":\"123 main street\",\n\t\t\"city\":\"fremont\",\n\t\t\"state\":\"CA\",\n\t\t\"country\":\"US\",\n\t\t\"zip\":\"94555\"\n\t},\n\t\"phoneNumber\":{\n\t\t\"areaCode\":\"510\",\n\t\t\"localNumber\":\"1231234\"\n\t}\n\n  }"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "get by state",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": {
+					"raw": "http://localhost:8090/accounts/111/contacts?state=ca,va",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"accounts",
+						"111",
+						"contacts"
+					],
+					"query": [
+						{
+							"key": "state",
+							"value": "ca,va",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"11\",\n    \"firstName\": \"sat\",\n    \"lastName\": \"jos\",\n    \"email\": \"abc@gmail.com\",\n\t\"address\":{\n\t\t\"street\":\"123 main street\",\n\t\t\"city\":\"fremont\",\n\t\t\"state\":\"CA\",\n\t\t\"country\":\"US\",\n\t\t\"zip\":\"94555\"\n\t},\n\t\"phoneNumber\":{\n\t\t\"areaCode\":\"510\",\n\t\t\"localNumber\":\"1231234\"\n\t}\n\n  }"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "put",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"id check\"] = jsonData.address.street === \"2 main street\";"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:8090/accounts/111/contacts/222",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"222\",\n    \"firstName\": \"sat\",\n    \"lastName\": \"jos\",\n    \"email\": \"abc@gmail.com\",\n\t\"address\":{\n\t\t\"street\":\"2 main street\",\n\t\t\"city\":\"fremont\",\n\t\t\"state\":\"CA\",\n\t\t\"country\":\"US\",\n\t\t\"zip\":\"94555\"\n\t},\n\t\"phoneNumber\":\"510-123-1234\"\n\n  }"
+				},
+				"description": "update"
+			},
+			"response": []
+		},
+		{
+			"name": "put again",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"firstName check\"] = jsonData.firstName === \"sati\";"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:8090/accounts/111/contacts/222",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"222\",\n    \"firstName\": \"sati\",\n    \"lastName\": \"jos\",\n    \"email\": \"abc@gmail.com\",\n\t\"address\":{\n\t\t\"street\":\"3 main street\",\n\t\t\"city\":\"fremont\",\n\t\t\"state\":\"CA\",\n\t\t\"country\":\"US\",\n\t\t\"zip\":\"94555\"\n\t},\n\t\"phoneNumber\":\"510-123-1234\"\n\n  }"
+				},
+				"description": "update"
+			},
+			"response": []
+		},
+		{
+			"name": "get after put",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"firstName check\"] = jsonData.firstName === \"sati\";"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:8090/accounts/111/contacts/222",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"11\",\n    \"firstName\": \"sat\",\n    \"lastName\": \"jos\",\n    \"email\": \"abc@gmail.com\",\n\t\"address\":{\n\t\t\"street\":\"123 main street\",\n\t\t\"city\":\"fremont\",\n\t\t\"state\":\"CA\",\n\t\t\"country\":\"US\",\n\t\t\"zip\":\"94555\"\n\t},\n\t\"phoneNumber\":{\n\t\t\"areaCode\":\"510\",\n\t\t\"localNumber\":\"1231234\"\n\t}\n\n  }"
+				},
+				"description": "retrieve"
+			},
+			"response": []
+		},
+		{
+			"name": "remove",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 204\"] = responseCode.code === 204;"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:8090/accounts/111/contacts/222",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"222\",\n    \"firstName\": \"sat\",\n    \"lastName\": \"jos\",\n    \"email\": \"abc@gmail.com\",\n\t\"address\":{\n\t\t\"street\":\"111 main street\",\n\t\t\"city\":\"fremont\",\n\t\t\"state\":\"CA\",\n\t\t\"country\":\"US\",\n\t\t\"zip\":\"94555\"\n\t},\n\t\"phoneNumber\":{\n\t\t\"areaCode\":\"510\",\n\t\t\"localNumber\":\"1231234\"\n\t}\n\n  }"
+				},
+				"description": "remove"
+			},
+			"response": []
+		},
+		{
+			"name": "get after remove",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 400\"] = responseCode.code === 400;"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:8090/accounts/111/contacts/222",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"11\",\n    \"firstName\": \"sat\",\n    \"lastName\": \"jos\",\n    \"email\": \"abc@gmail.com\",\n\t\"address\":{\n\t\t\"street\":\"123 main street\",\n\t\t\"city\":\"fremont\",\n\t\t\"state\":\"CA\",\n\t\t\"country\":\"US\",\n\t\t\"zip\":\"94555\"\n\t},\n\t\"phoneNumber\":{\n\t\t\"areaCode\":\"510\",\n\t\t\"localNumber\":\"1231234\"\n\t}\n\n  }"
+				},
+				"description": "retrive"
+			},
+			"response": []
+		}
+	]
+}
