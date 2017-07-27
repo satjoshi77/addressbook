@@ -34,9 +34,9 @@ GET /accounts/status HTTP/1.1
 Host: localhost:8090
 
 Response:
-
+HTTP Status: 200
 {
-    "status": "passing from satish-Inspiron-3521"
+    "status": "passing from ...."
 }
 ********************************************
 Post example:
@@ -45,8 +45,6 @@ http://localhost:8090/accounts/111/contacts
 POST /accounts/111/contacts HTTP/1.1
 Host: localhost:8090
 Content-Type: application/json
-Cache-Control: no-cache
-Postman-Token: 66725ab4-02f6-485c-3427-08cebf9c1906
 
 {
     "id": "222",
@@ -64,7 +62,8 @@ Postman-Token: 66725ab4-02f6-485c-3427-08cebf9c1906
 
   }
 
-response:
+Response:
+HTTP Status: 201
 {
     "address": {
         "city": "fremont",
@@ -90,6 +89,7 @@ Host: localhost:8090
 Content-Type: application/json
 
 Response:
+HTTP Status: 200
 {
     "address": {
         "city": "fremont",
@@ -129,6 +129,7 @@ Content-Type: application/json
 
   }
 Response:
+HTTP Status: 200
 {
     "address": {
         "city": "fremont",
@@ -167,6 +168,8 @@ Content-Type: application/json
 	"phoneNumber":"510-123-1234"
 
   }
+  Response:
+  HTTP Status: 204
 ********************************************
 
  ```
