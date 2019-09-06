@@ -1,0 +1,32 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: ab
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: ab
+    spec:
+      containers:
+        - name: ab
+          image: 'gcr.io/sj-kube-1234/ab:v1'
+          ports:
+            - containerPort: 8090
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ab-service
+  labels:
+    name: ab-service
+spec:
+  ports:
+    - port: 8090
+      targetPort: 8090
+      protocol: TCP
+  selector:
+    app: ab
+  type: LoadBalancer
